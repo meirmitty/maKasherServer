@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import {resturantsRouter} from "./routes/resturants-router";
-import {setResturants} from "./services/resturants-service";
+import {getAllResturants, setResturants} from "./services/resturants-service";
 
 const port = 3000;
 const app = express();
@@ -13,5 +13,6 @@ app.use("/resturants", resturantsRouter);
 
 app.listen(port, () => {
     setResturants();
+    getAllResturants()
     console.log('listening on ' + port)
 });
