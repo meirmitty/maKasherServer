@@ -5,10 +5,8 @@ export interface Resturants {
     id: string,
     location: string,
     name: string,
-    kashrut: string,
     restaurantFilters: [],
     contact: number,
-    mashgiachNum: number
 }
 
 let resturants: Resturants[] = [];
