@@ -9,31 +9,29 @@ export interface Resturants {
     contact: number,
 }
 
+export interface Position {
+    longitude: number
+    latitude: number
+}
+
 let resturants: Resturants[] = [];
 
 const setResturants = () => {
     resturants = JsonResturants as unknown as Resturants[];
 }
 
-const getAllResturants = async () => {
-    const ourURL = "https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJ3_279V3EAhUROO_7ElUqB-A&type=resturaunt&fields=name&key=AIzaSyB0UZEfccGHd_GUDy8gI6dqzqvU8pWuDQg";
-    const thereUrl = "https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4&fields=name,rating,formatted_phone_number&key=AIzaSyB0UZEfccGHd_GUDy8gI6dqzqvU8pWuDQg"
-    const newURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyB0UZEfccGHd_GUDy8gI6dqzqvU8pWuDQg&location=31.7063076,34.9988185&radius=5000&type=restaurant"
-    // tslint:disable-next-line:no-shadowed-variable
-    const response = await axios.get(newURL).then((response)=>{
-        console.log('succes')
-        console.log(response.data)
-    }).catch((err)=>{
-        console.log(err)
-    })
-    return response;
+const getAllResturantsFromGoogle = async (location: Position) => {
+    const newURL = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyB0UZEfccGHd_GUDy8gI6dqzqvU8pWuDQg&location=${location.latitude},${location.longitude}&radius=5000&type=restaurant`
+    const response = await axios.get(newURL);
+    if (response.data.error_message) {
+        return response.data.error_message;
+    }
+
+    return response.data.results
 }
 
 const deleteResturant = (id: string) => {
-    resturants = resturants.filter((resturant) => {
-        return resturant.id !== id;
-    })
+    resturants = resturants.filter((resturant) => resturant.id !== id)
 }
 
-
-export {getAllResturants, setResturants, deleteResturant}
+export {getAllResturantsFromGoogle, setResturants, deleteResturant}
