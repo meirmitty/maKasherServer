@@ -1,5 +1,5 @@
 import express from 'express';
-import {getAllResturantsFromGoogle, deleteResturant} from "../services/resturants-service";
+import {getAllResturantsFromGoogle} from "../services/resturants-service";
 
 const resturantsRouter = express.Router()
 
@@ -10,11 +10,6 @@ resturantsRouter.get('/:longitude/:latitude', async (req, res) => {
     }));
 })
 
-resturantsRouter.delete('/delete/:id', (req, res) => {
-    console.log('delete event')
-    deleteResturant(req.params.id);
-    res.send(200);
-})
 
 
 export {resturantsRouter}
