@@ -1,5 +1,5 @@
 import express from 'express';
-import {getAllKashrut} from "../services/kashruts-service";
+import {addKashrut, getAllKashrut} from "../services/kashruts-service";
 
 const kashrutRouter = express.Router()
 
@@ -8,9 +8,7 @@ kashrutRouter.get('/', (req, res) => {
 })
 
 kashrutRouter.post("/add", (req, res) => {
-    const body = req.body;
-    console.log(body.id)
-    console.log(body.hechsher)// res.send(addKashrut(req.body));
+    res.send(addKashrut(req.body))
 })
 
 export {kashrutRouter}

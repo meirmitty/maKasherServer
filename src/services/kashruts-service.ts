@@ -1,34 +1,28 @@
-import {default as JsonKashruts} from "../jsons/kashrut.json";
+import {Kashrut} from "../mongoose/KashrutSchema";
 
 export interface Kashrut {
-    id: string
+    _id: string
     name: string
     kashrut: string
-    contact: string
 }
 
-let kashruts: Kashrut[] = [];
-
-const setKashruts = () => {
-    kashruts = JsonKashruts as unknown as Kashrut[];
-}
+const kashruts: Kashrut[] = [];
 
 const getAllKashrut = () => {
     return kashruts;
 }
 
-const deleteKashrut = (id: string) => {
-    kashruts = kashruts.filter((event) => {
-        return event.id !== id;
-    })
+
+const addKashrut = async ({id, name, picture}: { id: string, name: string, picture: string }) => {
+    const filter = {_id: id};
+    const kashrutToSave = {_id: id, name, picture}
+
+    return Kashrut.findOneAndUpdate(filter, kashrutToSave, {
+        upsert: true // Make this update into an upsert
+    });
 }
 
-const addKashrut = (event: Event) => {
-    console.log('add kashrut')
-}
+export {addKashrut}
 
-const updateKashrut = (updatedEvent: Event) => {
-    console.log('update kashrut')
-}
 
-export {updateKashrut, addKashrut, getAllKashrut, setKashruts, deleteKashrut}
+export {getAllKashrut}

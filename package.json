@@ -12,7 +12,8 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "geocoder": "^0.2.3",
-    "json-loader": "^0.5.7"
+    "json-loader": "^0.5.7",
+    "mongoose": "^7.5.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
