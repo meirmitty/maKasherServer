@@ -1,21 +1,21 @@
 import {Kashrut} from "../mongoose/KashrutSchema";
 
-export interface Kashrut {
+export interface KashrutType {
     _id: string
     name: string
-    kashrut: string
+    picture: string
 }
 
-const kashruts: Kashrut[] = [];
+const kashruts: KashrutType[] = [];
 
 const getAllKashrut = () => {
     return kashruts;
 }
 
+const addKashrut = async ({_id, name, picture}: KashrutType) => {
+    const filter = {_id};
 
-const addKashrut = async ({id, name, picture}: { id: string, name: string, picture: string }) => {
-    const filter = {_id: id};
-    const kashrutToSave = {_id: id, name, picture}
+    const kashrutToSave = {_id, kashrut: name, picture}
 
     return Kashrut.findOneAndUpdate(filter, kashrutToSave, {
         upsert: true // Make this update into an upsert
