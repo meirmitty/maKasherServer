@@ -1,16 +1,9 @@
 import axios from "axios";
-
-export interface Resturants {
-    id: string,
-    location: string,
-    name: string,
-    restaurantFilters: [],
-    contact: number,
-}
+import {KashrutModel} from "../mongoose/KashrutSchema";
 
 export interface Position {
-    longitude: number
-    latitude: number
+    longitude: string
+    latitude: string
 }
 
 const getAllResturantsFromGoogle = async (location: Position) => {
@@ -23,4 +16,17 @@ const getAllResturantsFromGoogle = async (location: Position) => {
     return response.data.results
 }
 
-export {getAllResturantsFromGoogle}
+const getAllResturants = async ({longitude, latitude}: Position) => {
+    const resturants = await getAllResturantsFromGoogle({
+        longitude,
+        latitude
+    });
+
+    return await Promise.all(resturants.map(async (resturant: any) => {
+        const kashrutResponse = await KashrutModel.findOne({_id: resturant.place_id})
+        return {...resturant, ...kashrutResponse}
+    }))
+
+}
+
+export {getAllResturants}
