@@ -13,6 +13,10 @@ const KashrutSchema = new Schema({
     picture: {
         type: String,
         required: true
+    },
+    mashgiachNumber: {
+        type: String,
+        required: true
     }
 })
 
